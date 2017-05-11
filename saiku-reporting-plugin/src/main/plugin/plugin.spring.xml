@@ -34,13 +34,18 @@
      <property name="metadataRepository" ref="metadataRepository"/>
   </bean>
 
-  <bean id="metadataDiscoverResource" class="org.saiku.reporting.backend.rest.MetadataDiscoverResource" />
+  <bean id="metadataDiscoverResource" class="org.saiku.reporting.backend.rest.MetadataDiscoverResource" >
+    <property name="metadataRepository" ref="metadataRepository"/>
+  </bean>
   
   <bean id="reportGeneratorService" scope="prototype" class="org.saiku.reporting.backend.service.ReportGeneratorService">
+    <property name="contentAccessFactory" ref="contentAccessFactory" />
     <property name="reportingComponent" ref="reportingComponent" />
+    <property name="metadataRepository" ref="metadataRepository"/>
   </bean>
   
   <bean id="reportGeneratorResource" scope="prototype" class="org.saiku.reporting.backend.rest.ReportGeneratorResource">
+    <property name="reportGeneratorService" ref="reportGeneratorService"></property>
     <property name="metadataQueryComponent" ref="metadataQuery"></property>
   </bean>
   
@@ -66,12 +71,10 @@
   </bean>  
 	
   <bean class="org.pentaho.platform.engine.core.solution.ContentInfo">
-	<property name="mimeType" value="application/zip"/>	
-	<property name="extension" value=".srpt"/>	
-	<property name="canImport" value="true"/>
-	<property name="canExport" value="true"/>		
-	<pen:publish as-type="INTERFACES"/>
+    <property name="mimeType" value="application/zip"/>	
+    <property name="extension" value=".srpt"/>	
+    <property name="canImport" value="true"/>
+    <property name="canExport" value="true"/>		
+    <pen:publish as-type="INTERFACES"/>
   </bean>
-
-
 </beans>
